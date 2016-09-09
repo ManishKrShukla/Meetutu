@@ -4,6 +4,7 @@ var app = express();
 var cors = require('cors')
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(cors({
     origin: 'http://localhost:9000',
     optionsSuccessStatus: 200
