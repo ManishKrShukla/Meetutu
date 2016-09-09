@@ -1,0 +1,54 @@
+<script type="text/ng-template" id="chat.html">
+    <div class="row chat-window col-xs-12" id="chat_window_1" style="margin-left:10px;">
+        <div class="col-xs-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading top-bar">
+                    <div class="col-md-8 col-xs-8">
+                        <h3 class="panel-title">
+                            <span class="glyphicon glyphicon-comment"></span> Chat Up with
+                        </h3>
+                    </div>
+                </div>
+                <div class="panel-body msg_container_base" id="msg_container_base">
+                    <div class="row msg_container" ng-class="{'base_sent': msg.sent, 'base_receive' : !msg.sent}" ng-repeat="msg in parameter.windowOptions.chat">
+                        <div class="col-md-2 col-xs-2 avatar" ng-if="!msg.sent">
+                            <img src="images/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                        </div>
+                        <div class="col-md-10 col-xs-10">
+                            <div class="messages msg_sent">
+                                <p>{{msg.message}}</p>
+                                <time datetime="2009-11-13T20:00">
+                                    <span ng-if="msg.sent">{{parameter.windowOptions.userName}}</span>
+                                    <span ng-if="!msg.sent">{{parameter.windowOptions.user.name}}</span>
+                                     • 51 min
+                                </time>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-xs-2 avatar" ng-if="msg.sent">
+                            <img src="images/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="btn-input" type="text" class="form-control input-sm chat_input" ng-model="parameter.chatMessage" placeholder="Write your message here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary btn-sm" id="btn-chat" ng-click="parameter.sendMessage()">Send</button>
+                            <button class="btn btn-danger btn-sm" ng-click="parameter.closeClick()">Close</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<div class="map-container">
+    <ui-gmap-google-map center="mapCtrl.map.center" zoom="mapCtrl.map.zoom">
+        <ui-gmap-markers models="mapCtrl.markers" coords="'coords'" idkey="'id'" click="mapCtrl.onClick" icon="'icon'">
+        </ui-gmap-markers>
+
+        <ui-gmap-window templateUrl="'chat.html'" templateParameter="mapCtrl" coords="mapCtrl.windowOptions.user.coords " options="mapCtrl.windowOptions" show="mapCtrl.windowOptions.show" closeClick="mapCtrl.closeClick">
+        </ui-gmap-window>
+    </ui-gmap-google-map>
+</div>

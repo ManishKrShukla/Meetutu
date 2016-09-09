@@ -7,7 +7,7 @@
  * # AboutCtrl
  * Controller of the meetutuApp
  */
-angular.module('meetutuApp').controller('LoginCtrl', ['$scope', '$q', 'UserService', '$timeout', function($scope, $q, userService, $timeout) {
+angular.module('meetutuApp').controller('LoginCtrl', ['$scope', '$q', 'UserService', '$timeout', '$location', function($scope, $q, userService, $timeout, $location) {
     var scope = $scope;
     scope.userService = userService; //Storing a reference instead of creating new objects. This helps in referencing the service in the ui and at the very same time, will prevent creation of additional variables for UI. 
     scope.locationDenied = false;
@@ -18,7 +18,7 @@ angular.module('meetutuApp').controller('LoginCtrl', ['$scope', '$q', 'UserServi
     };
 
     scope.loadTags = function(query) {
-        query = query.toLowerCase()
+        query = query.toLowerCase();
         return userService.skills.filter((x) => x.text.toLowerCase().startsWith(query));
     };
 
@@ -26,22 +26,28 @@ angular.module('meetutuApp').controller('LoginCtrl', ['$scope', '$q', 'UserServi
         if (!userService.userDetails.skills.length) {
             alert("You must add atleast one skill");
         } else {
-            scope.userService.userDetails.position = scope.userLogin.position;
-            userService.addUser();
+            scope.userService.userDetails.position = scope.position;
+            userService.addUser().then(() => {
+                alert("User registered successfully. Login To Continue");
+                window.location.reload(); // using this method to refresh since templates are cached and might not rerender.
+            });
         }
     };
 
     scope.login = function() {
+        scope.userLogin.position = scope.position;
+
         if (userService.checkUser(scope.userLogin)) {
             alert("Logged in successfully");
+            $location.path("/users");
         } else {
             alert("no user found");
         }
     };
 
     scope.signinCallback = function(googleUser) {
-        userService.userDetails['userName'] = googleUser.w3.ig;
-        userService.userDetails['email'] = googleUser.w3.U3;
+        userService.userDetails.userName = googleUser.w3.ig;
+        userService.userDetails.email = googleUser.w3.U3;
         scope.$apply();
     };
 
@@ -63,9 +69,13 @@ angular.module('meetutuApp').controller('LoginCtrl', ['$scope', '$q', 'UserServi
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             scope.$apply(() => {
-                scope.userLogin.position = position;
+                scope.position = {
+                    'latitude': position.coords.latitude,
+                    'longitude': position.coords.longitude,
+                    'accuracy': position.coords.accuracy
+                };
             });
-        }, (err) => {
+        }, () => {
             scope.$apply(() => {
                 scope.locationDenied = true;
             });

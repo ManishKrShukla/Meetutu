@@ -139,7 +139,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('serve', function(cb) {
-    runSequence('clean:tmp', ['bower'], ['lint:scripts'], ['start:client'],
+    runSequence('clean:tmp', 'clean:dist', ['bower'], ['lint:scripts'], ['start:client'],
         'watch', cb);
 });
 

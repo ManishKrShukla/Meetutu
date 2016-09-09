@@ -14,18 +14,24 @@ angular
         'ngCookies',
         'ui.bootstrap',
         'ngResource',
+        'uiGmapgoogle-maps',
         'ngRoute',
         'ngTagsInput',
         'ngSanitize'
     ]);
 
-angular.module('meetutuApp').config(['$routeProvider', function($routeProvider) {
+angular.module('meetutuApp').config(['$routeProvider', 'uiGmapGoogleMapApiProvider', function($routeProvider, uiGmapGoogleMapApiProvider) {
+
+    uiGmapGoogleMapApiProvider.configure({
+        v: '3.20',
+        libraries: 'weather,geometry,visualization'
+    });
 
     $routeProvider
-        .when('/main', {
-            templateUrl: 'app-components/routes/users/main.html',
-            controller: 'MainCtrl',
-            controllerAs: 'main'
+        .when('/users', {
+            templateUrl: 'app-components/routes/map/map.html',
+            controller: 'MapCtrl',
+            controllerAs: 'mapCtrl'
         })
         .when('/', {
             templateUrl: 'app-components/routes/login/login-tpl.html',
@@ -35,4 +41,6 @@ angular.module('meetutuApp').config(['$routeProvider', function($routeProvider) 
         .otherwise({
             redirectTo: '/'
         });
+
+
 }]);

@@ -7,7 +7,7 @@
  * # AboutCtrl
  * Controller of the meetutuApp
  */
-angular.module('meetutuApp').service('UserService', function() {
+angular.module('meetutuApp').service('UserService', ['$q', '$timeout', '$http', function($q, $timeout, $http) {
 
     this.userDetails = {
         userName: '',
@@ -17,16 +17,38 @@ angular.module('meetutuApp').service('UserService', function() {
         skills: []
     };
 
+    this.getUserCoords = function() {
+        var defer = $q.defer();
+
+        $http({ url: "http://localhost:3000/map-coords" }).then((response) => {
+            defer.resolve(response);
+        })
+
+        return defer.promise;
+    };
+
     this.addUser = function() {
+        var deferred = $q.defer();
         let users = localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users")) : [];
         users.push(this.userDetails); //ideally, password shall be hashed before saving, but skipping it as of now.
         localStorage.setItem("users", JSON.stringify(users));
+
+        $timeout(() => {
+            deferred.resolve(true);
+        }, 3000);
+
+        return deferred.promise;
     };
 
     this.checkUser = function(userDetails) {
         let users = localStorage.getItem("users") ? JSON.parse(localStorage.getItem("users")) : [];
+        var user = users.filter((u) => u.email = userDetails.email && u.password === userDetails.password)[0];
 
-        return users.filter((u) => u.email = userDetails.email && u.password === userDetails.password).length;
+        if (user) {
+            this.userDetails = user;
+        }
+
+        return user;
     };
 
     this.skills = [
@@ -58,4 +80,4 @@ angular.module('meetutuApp').service('UserService', function() {
         { text: 'test13' },
         { text: 'test14' },
     ];
-});
+}]);
