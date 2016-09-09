@@ -28,7 +28,7 @@ angular.module('meetutuApp').config(['$routeProvider', 'uiGmapGoogleMapApiProvid
     });
 
     $routeProvider
-        .when('/users', {
+        .when('/map', {
             templateUrl: 'app-components/routes/map/map.html',
             controller: 'MapCtrl',
             controllerAs: 'mapCtrl'

@@ -8,7 +8,7 @@
  * Controller of the meetutuApp
  */
 angular.module('meetutuApp')
-    .controller('MapCtrl', ['$timeout', '$location', 'UserService', 'chatService', '$scope', function($timeout, $location, userService, chatService, $scope) {
+    .controller('MapCtrl', ['$timeout', '$location', '$scope', 'UserService', 'chatService', function($timeout, $location, $scope, userService, chatService) {
         var vm = this;
 
         vm.windowOptions = {

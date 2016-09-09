@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('meetutuApp')
-    .factory('chatService', [, function() {
+    .factory('chatService', function() {
         var socket = io.connect("http://localhost:3000");
 
         return {
@@ -12,4 +12,4 @@ angular.module('meetutuApp')
                 socket.emit(eventName, data);
             }
         };
-    }]);
+    });

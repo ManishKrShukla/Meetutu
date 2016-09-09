@@ -39,7 +39,7 @@ angular.module('meetutuApp').controller('LoginCtrl', ['$scope', '$q', 'UserServi
 
         if (userService.checkUser(scope.userLogin)) {
             alert("Logged in successfully");
-            $location.path("/users");
+            $location.path("/map");
         } else {
             alert("no user found");
         }

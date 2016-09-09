@@ -22,7 +22,7 @@ angular.module('meetutuApp').service('UserService', ['$q', '$timeout', '$http', 
 
         $http({ url: "http://localhost:3000/map-coords" }).then((response) => {
             defer.resolve(response);
-        })
+        });
 
         return defer.promise;
     };
