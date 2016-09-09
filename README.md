@@ -7,6 +7,8 @@ version 0.15.1.
 
 Run `npm install` for building and `bower install` for preview.
 
+After that you should switch to server folder inside the app, and run npm install again.
+
 Run `gulp` for building and `gulp serve` for preview.
 
 ## Testing
