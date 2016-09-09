@@ -1,0 +1,73 @@
+<div class="alert alert-danger" role="alert" ng-if="locationDenied">You must enable the location services to use this app.</div>
+
+<uib-tabset active="active" ng-class="{'no-location': locationDenied}">
+    <uib-tab disable="tab.disabled" heading="Login" index="0">
+        <form class="container well">
+            <div class="form-group">
+                <label for="emailId">Email address</label>
+                <input class="form-control" id="emailId" ng-model="userLogin.email" placeholder="Email" type="email" />
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input class="form-control" id="exampleInputPassword1" ng-model="userLogin.password" placeholder="Password" type="password" />
+            </div>
+            <button class="btn btn-default" ng-click="login()" type="submit">Submit</button>
+        </form>
+    </uib-tab>
+
+    <uib-tab disable="tab.disabled" heading="Sign Up" index="1">
+        <form class="container well">
+            <div class="row">
+                <div class="form-group col-xs-6">
+                    <label for="emailId">Email address</label>
+                    <input class="form-control" id="emailId" ng-model="userService.userDetails.email" placeholder="Email" type="email" required />
+                </div>
+                <div class="form-group col-xs-6">
+                    <label for="name">Name</label>
+                    <input class="form-control" id="name" ng-model="userService.userDetails.userName" placeholder="Name" type="text" required />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-center padding-top-10">
+                    <span>--------------------------OR--------------------------</span>
+                </div>
+                <div class="col-xs-12 text-center padding-top-10 padding-bottom-10">
+                    <div data-onsuccess="onSignIn" id="signInButton"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xs-6">
+                    <label for="mobileNo">Mobile No.</label>
+                    <input class="form-control" id="mobileNo" ng-model="userService.userDetails.mobileNo" placeholder="Mobile No." type="text" required />
+                </div>
+                <div class="form-group col-xs-6">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input class="form-control" id="exampleInputPassword1" ng-model="userService.userDetails.password" placeholder="Password" type="password" required />
+                </div>
+            </div>
+
+            <div class="row padding-top-10 padding-bottom-10">
+                <div class="col-xs-12">
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" ng-model="userService.userDetails.teacher" ng-value=true /> I wanna Teach.
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" ng-model="userService.userDetails.teacher" ng-value=false /> I wanna learn
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    <label for="skills">Skills</label>
+                    <tags-input class="form-control autocomplete-wrapper" ng-model="userService.userDetails.skills" add-from-autocomplete-only=true>
+                        <auto-complete source="loadTags($query)"></auto-complete>
+                    </tags-input>
+                </div>
+            </div>
+
+
+            <button class="btn btn-default" ng-click="signUp()" type="submit">Sign Up</button>
+        </form>
+    </uib-tab>
+</uib-tabset>
